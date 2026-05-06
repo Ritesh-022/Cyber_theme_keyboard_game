@@ -1,0 +1,61 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ffffff22; border-radius: 2px; }
+
+.scanlines::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.theme-dawn * {
+  font-family: Georgia, "Times New Roman", serif !important;
+}
+
+.theme-dawn input,
+.theme-dawn button {
+  font-family: Georgia, "Times New Roman", serif !important;
+}
+
+.theme-night * {
+  font-family: "Courier New", monospace !important;
+}
+
+.theme-night.scanlines::after {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(200, 168, 75, 0.04) 2px,
+    rgba(200, 168, 75, 0.04) 4px
+  );
+}
+
+.theme-transition {
+  transition: background 0.5s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 700px) {
+  .support-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
