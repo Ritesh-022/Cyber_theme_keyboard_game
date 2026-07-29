@@ -77,18 +77,18 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Wait for Docker Hub
-        run: sleep 20
+        run: sleep 40
 
       - name: Scan Backend Docker Image
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-backend:${{ github.sha }}
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-backend:latest
           severity: HIGH,CRITICAL
           exit-code: "0"
 
       - name: Scan Frontend Docker Image
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-frontend:${{ github.sha }}
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-frontend:latest
           severity: HIGH,CRITICAL
           exit-code: "0"
