@@ -9,6 +9,8 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
 jobs:
 
   npm-audit:
@@ -53,7 +55,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Trivy Filesystem Scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.36.0
         with:
           scan-type: fs
           scan-ref: .
@@ -77,16 +79,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
+      - name: Wait for Docker Hub
+        run: sleep 20
+
       - name: Scan Backend Docker Image
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.36.0
         with:
-          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-backend:latest
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-backend:${{ github.sha }}
           severity: HIGH,CRITICAL
           exit-code: "0"
 
       - name: Scan Frontend Docker Image
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.36.0
         with:
-          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-frontend:latest
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/cyber-theme-frontend:${{ github.sha }}
           severity: HIGH,CRITICAL
           exit-code: "0"
